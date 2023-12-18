@@ -6,11 +6,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.gateway.filter.ratelimit.KeyResolver;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 import com.netflix.discovery.DiscoveryClient;
 import com.netflix.discovery.shared.transport.jersey.EurekaJerseyClientImpl.EurekaJerseyClientBuilder;
+
+import reactor.core.publisher.Mono;
 
 @EnableDiscoveryClient
 @SpringBootApplication
@@ -50,5 +52,10 @@ public class GatewayApplication {
 		args.setEurekaJerseyClient(builder.build());
 		return args;
 	}
+	
+	 @Bean
+	   KeyResolver userKeyResolver() {
+	      return exchange -> Mono.just("1");
+	   }
 
 }
