@@ -16,12 +16,20 @@ public class ShortenerServiceImpl {
 	private MyRepository myRepository;
 
     public String generateShortUrl(String url) {
-        String shortUrl = generateShortUrl();
-        MyEntity myEntity = new MyEntity();
-        myEntity.setShortUrl(shortUrl);
-        myEntity.setUrl(url);
-        myRepository.save(myEntity);
-        return shortUrl;
+    	 List<MyEntity> myEntities = myRepository.findByUrl(url);
+    	 String shortUrl="";
+         if (myEntities.isEmpty()) {
+        	 shortUrl = generateShortUrl();
+             MyEntity myEntity = new MyEntity();
+             myEntity.setShortUrl(shortUrl);
+             myEntity.setUrl(url);
+             myRepository.save(myEntity);
+             }
+         else {
+        	 shortUrl=myEntities.get(0).getShortUrl();
+         }
+       
+        return "https://"+shortUrl;
     }
 
     public String getUrl(String shortUrl) {

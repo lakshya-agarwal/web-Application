@@ -11,4 +11,6 @@ import org.springframework.stereotype.Repository;
 public interface MyRepository extends JpaRepository<MyEntity, Long> {
 
 	List<MyEntity> findByShortUrl(String shortUrl);
+
+	List<MyEntity> findByUrl(String url);
 }
