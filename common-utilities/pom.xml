@@ -5,14 +5,16 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>com.example</groupId>
-		<artifactId>youtube-clone</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.7.6</version>
+		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.example</groupId>
-	<artifactId>common-utilities</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>common-utilities</name>
+	<artifactId>commons-utilities</artifactId>
+	<version>1.0</version>
+	<name>commons-utilities</name>
+	<description>Common utilities</description>
 	<url>http://maven.apache.org</url>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -36,6 +38,7 @@
 			<artifactId>spring-boot-starter-aop</artifactId>
 
 		</dependency>
+
 
 	</dependencies>
 	<build>
