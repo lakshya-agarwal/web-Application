@@ -12,7 +12,9 @@ spring:
         predicates:
         - Path=/shortener/**
         filters:
-        - name: RequestRateLimiter
-          args:
-            redis-rate-limiter.replenishRate: 1
-            redis-rate-limiter.burstCapacity: 2
+        - AuthenticationFilter
+        
+      - id: identity-service
+        uri: lb://IDENTITY-SERVICE
+        predicates:
+        - Path=/auth/**

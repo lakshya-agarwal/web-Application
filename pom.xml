@@ -25,5 +25,6 @@
 		<module>common-utilities</module>
 		<module>gateway</module>
 		<module>eureka</module>
+		<module>identity-service</module>
 	</modules>
 </project>

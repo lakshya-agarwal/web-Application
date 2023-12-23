@@ -1,4 +1,4 @@
-package com.example.gateway;
+package com.lakshya;
 
 import java.nio.file.Paths;
 
@@ -6,18 +6,16 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.cloud.gateway.filter.ratelimit.KeyResolver;
 import org.springframework.context.annotation.Bean;
 
 import com.netflix.discovery.DiscoveryClient;
 import com.netflix.discovery.shared.transport.jersey.EurekaJerseyClientImpl.EurekaJerseyClientBuilder;
 
-import reactor.core.publisher.Mono;
-
-@EnableDiscoveryClient
 @SpringBootApplication
-public class GatewayApplication {
-	
+@EnableDiscoveryClient
+public class IdentityServiceApplication {
+
+
 	@Value("${server.ssl.key-store}")
 	private String keyStore;
 
@@ -33,10 +31,12 @@ public class GatewayApplication {
 	@Value("${server.ssl.key-alias}")
 	private String sslAlias;
 
+	
 	public static void main(String[] args) {
-		SpringApplication.run(GatewayApplication.class, args);
+		SpringApplication.run(IdentityServiceApplication.class, args);
 	}
 	
+
 	@Bean
 	public DiscoveryClient.DiscoveryClientOptionalArgs discoveryClientOptionalArgs() {
 		DiscoveryClient.DiscoveryClientOptionalArgs args = new DiscoveryClient.DiscoveryClientOptionalArgs();
@@ -52,5 +52,5 @@ public class GatewayApplication {
 		args.setEurekaJerseyClient(builder.build());
 		return args;
 	}
-	
+
 }
