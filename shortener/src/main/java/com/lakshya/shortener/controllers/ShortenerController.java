@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.view.RedirectView;
 
+import com.lakshya.shortener.LogExecutionTime;
 import com.lakshya.shortener.serviceImpl.ShortenerServiceImpl;
 
 @RestController
@@ -26,6 +27,7 @@ public class ShortenerController {
     @Autowired
     private ShortenerServiceImpl shortenerService;
 
+    @LogExecutionTime
     @PostMapping("/shorten")
     public ResponseEntity<String> shortenUrl(@RequestBody String url) {
         String shortUrl = shortenerService.generateShortUrl(url);
