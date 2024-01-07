@@ -1,0 +1,68 @@
+version: '3'
+services:
+  eureka:
+    build:
+      context: ./eureka
+      dockerfile: Dockerfile.eureka
+    ports:
+      - "8761:8761"
+    volumes:
+      - /home/ubuntu/Desktop/lakshya/cert:/app/cert
+    networks:
+      - my-network
+
+  gateway:
+    build:
+      context: ./gateway
+      dockerfile: Dockerfile.gateway
+    ports:
+      - "8081:8081"
+    depends_on:
+      - eureka
+      - postgres
+    volumes:
+      - /home/ubuntu/Desktop/lakshya/cert:/app/cert
+    networks:
+      - my-network
+
+  url-shortener-service:
+    build:
+      context: ./shortener
+      dockerfile: Dockerfile.shortener
+    ports:
+      - "8765:8765"
+    depends_on:
+      - eureka
+      - postgres
+    networks:
+      - my-network
+    volumes:
+      - /home/ubuntu/Desktop/lakshya/cert:/app/cert
+      
+  identity:
+    build:
+      context: ./identity-service
+      dockerfile: Dockerfile.identity
+    ports:
+      - "9898:9898"
+    depends_on:
+      - eureka
+      - postgres
+    networks:
+      - my-network
+    volumes:
+      - /home/ubuntu/Desktop/lakshya/cert:/app/cert
+       
+
+  postgres:
+    build:
+      context: .
+      dockerfile: Dockerfile.postgres
+    ports:
+      - "5432:5432"
+    networks:
+      - my-network
+
+networks:
+  my-network:
+    driver: bridge

@@ -22,8 +22,7 @@ import com.lakshya.shortener.serviceImpl.ShortenerServiceImpl;
 @RequestMapping("/shortener")
 public class ShortenerController {
     private Map<String, String> urlMap = new HashMap<>();
-    private Random random = new Random();
-
+    
     @Autowired
     private ShortenerServiceImpl shortenerService;
 
@@ -31,6 +30,7 @@ public class ShortenerController {
     @PostMapping("/shorten")
     public ResponseEntity<String> shortenUrl(@RequestBody String url) {
         String shortUrl = shortenerService.generateShortUrl(url);
+        
         return new ResponseEntity<>(shortUrl, HttpStatus.OK);
     }
 
