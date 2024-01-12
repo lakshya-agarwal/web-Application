@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shortener-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shortener-server
+  template:
+    metadata:
+      labels:
+        app: shortener-server
+    spec:
+      containers:
+      - name: shortener-container
+        image: lakshya452/shortener:latest
+        ports:
+        - containerPort: 8765
+        volumeMounts:
+        - name: cert-volume
+          mountPath: /app/cert
+      volumes:
+      - name: cert-volume
+        persistentVolumeClaim:
+          claimName: cert-pvc
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: shortener-service
+spec:
+  selector:
+    app: shortener-server
+  ports:
+  - protocol: TCP
+    port: 8765
+    targetPort: 8765
+  type: ClusterIP
+

@@ -25,7 +25,7 @@ services:
     networks:
       - my-network
 
-  url-shortener-service:
+  shortener:
     build:
       context: ./shortener
       dockerfile: Dockerfile.shortener

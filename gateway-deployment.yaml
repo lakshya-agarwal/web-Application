@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gateway-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gateway-server
+  template:
+    metadata:
+      labels:
+        app: gateway-server
+    spec:
+      containers:
+      - name: gateway-container
+        image: lakshya452/gateway:latest
+        ports:
+        - containerPort: 8081
+        volumeMounts:
+        - name: cert-volume
+          mountPath: /app/cert
+      volumes:
+      - name: cert-volume
+        persistentVolumeClaim:
+          claimName: cert-pvc
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: gateway-service
+spec:
+  selector:
+    app: gateway-server
+  ports:
+  - protocol: TCP
+    port: 8081
+    targetPort: 8081
+  type: NodePort
+

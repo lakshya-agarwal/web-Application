@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: identity-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: identity-server
+  template:
+    metadata:
+      labels:
+        app: identity-server
+    spec:
+      containers:
+      - name: identity-container
+        image: lakshya452/identity:latest
+        ports:
+        - containerPort: 9898
+        volumeMounts:
+        - name: cert-volume
+          mountPath: /app/cert
+      volumes:
+      - name: cert-volume
+        persistentVolumeClaim:
+          claimName: cert-pvc
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: identity-service
+spec:
+  selector:
+    app: identity-server
+  ports:
+  - protocol: TCP
+    port: 9898
+    targetPort: 9898
+  type: ClusterIP
+

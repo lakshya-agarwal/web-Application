@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: eureka-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: eureka-server
+  template:
+    metadata:
+      labels:
+        app: eureka-server
+    spec:
+      containers:
+      - name: eureka-container
+        image: lakshya452/shortener:latest
+        ports:
+        - containerPort: 8761
+        volumeMounts:
+        - name: cert-volume
+          mountPath: /app/cert
+      volumes:
+      - name: cert-volume
+        persistentVolumeClaim:
+          claimName: cert-pvc
+
